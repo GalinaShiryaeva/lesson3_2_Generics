@@ -20,9 +20,10 @@ object NoteService {
                 return noteComment.id
             }
         }
-        throw NoteNotFoundException("Заметка не найдена")
+        throw NoteNotFoundException("The note is not found")
     }
 
+    @Throws(NoteNotFoundException::class)
     fun delete(noteId: ULong): Boolean {
         for (n in notes) {
             if (n.id == noteId) {
@@ -37,9 +38,10 @@ object NoteService {
                 return true
             }
         }
-        return false
+        throw NoteNotFoundException("Cannot delete the note, it's not found")
     }
 
+    @Throws(NoteCommentNotFoundException::class)
     fun deleteComment(commentId: ULong): Boolean {
         for (noteComment in noteComments) {
             if (noteComment.id == commentId) {
@@ -48,7 +50,7 @@ object NoteService {
                 return true
             }
         }
-        return false
+        throw NoteCommentNotFoundException("Cannot delete the comment, it's not found")
     }
 
     @Throws(NoteNotFoundException::class)
@@ -60,7 +62,7 @@ object NoteService {
                 return true
             }
         }
-        throw NoteNotFoundException("Заметка не найдена")
+        throw NoteNotFoundException("The note is not found")
     }
 
     @Throws(NoteCommentNotFoundException::class)
@@ -71,7 +73,7 @@ object NoteService {
                 return true
             }
         }
-        throw NoteCommentNotFoundException("Комментарий к заметке не найден")
+        throw NoteCommentNotFoundException("The comment is not found")
     }
 
     fun get(noteIds: Array<ULong> = emptyArray()): Array<Note> {
@@ -85,7 +87,7 @@ object NoteService {
             }
         }
         return resultArray.also{
-            println("Не удалось обработать запрос")
+            println("Failed to process request")
         }
     }
 
@@ -96,7 +98,7 @@ object NoteService {
                 return note
             }
         }
-        throw NoteNotFoundException("Заметка не найдена")
+        throw NoteNotFoundException("The note is not found")
     }
 
     fun getComments(note: Note): Array<NoteComment> {
@@ -118,6 +120,7 @@ object NoteService {
         return emptyArray()
     }
 
+    @Throws(NoteCommentNotFoundException::class)
     fun restoreComment(commentId: ULong): Boolean {
         for (nc in deletedComments) {
             if (nc.id == commentId) {
@@ -126,7 +129,7 @@ object NoteService {
                 return true
             }
         }
-        return false
+        throw NoteNotFoundException("The comment is not found")
     }
 
     enum class PrivacyIndex(index: Int) {

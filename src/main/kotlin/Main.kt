@@ -25,7 +25,7 @@ fun main() {
     println(NoteService.deleteComment(note3.id))
 
     println("Edit note2: " + NoteService.edit(note2, "New title for note2", "New text for note2"))
-    //println("Edit note3 (doesn't exist): " + NoteService.edit(note3, "New title for note3", "New text for note3"))
+    println("Edit note3 (doesn't exist): " + NoteService.edit(note3, "New title for note3", "New text for note3"))
 
     println("Edit comment12 for note1: " + NoteService.editComment(noteComment12, "Changed comment12"))
     println("Edit comment22 for note2: " + NoteService.editComment(noteComment22, "Changed comment22"))
